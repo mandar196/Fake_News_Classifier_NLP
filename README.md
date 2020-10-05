@@ -1,8 +1,7 @@
 # Fake_News_Classifier
 
-![1](https://user-images.githubusercontent.com/61036755/94990314-c13b7800-0598-11eb-96ab-94e243e019f2.jpg)
-<p> This is complete End to end ML Application in Healthcare sector.</p>
-<p>This Web App makes predictions about various diseases like Heart, Diabetes, Cancer, Malaria, Pneumonia, Diabetes etc.</p>
+![download](https://user-images.githubusercontent.com/61036755/95099479-89296600-074d-11eb-8c5e-ba2caec33cbb.png)
+<p> This is complete End to End ML Application for detecting fake news.</p>
 
 <hr>
 
