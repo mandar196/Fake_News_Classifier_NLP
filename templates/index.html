@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fake News Classifier</title>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+	<style>
+		body{
+			background: black;
+			color: white;
+		}
+		.modal-body,.modal-footer,.modal-header{
+			background:#fff;
+			border: none;
+			color: black;
+		}
+		.modal-header .close{
+			color: red;
+			text-shadow: none;
+			size: 1.9rem;
+		}
+		.close{
+			opacity: 1;
+		}
+	</style>
+</head>
+<body>
+	<div align="center" style="margin-top: 50px;" class="container">
+		<div class="card bg-transparent">
+			<div class="card-header bg-transparent">
+				<p id="source" data-text="Real or Not? Fake News Detection !"></p>
+				<h1 id="dest"></h1>
+			</div><br>
+			<div class="card-body bg-transparent">
+				<form><br>
+					<textarea type="text" class="form-control bg-dark text-white" name="news" id="news" placeholder="Enter news here!" rows="5"></textarea><br>
+					<button type="submit" class="btn btn-lg btn-success" name="submit" id="submit">Predict</button>
+				</form>
+			</div>
+  		</div>	
+  	</div>
+</body>
+</html>
+<script>
+	var source = $('#source').attr('data-text');
+	var dest   = $('#dest');
+	function typeWriter(text, n) {
+	    if (n < (text.length)) {
+	        dest.html(text.substring(0, n+1));
+	        n++;
+	        setTimeout(function() {
+	            typeWriter(text, n)
+	        }, 150);
+		}
+	}
+
+	typeWriter(source, 0);
+
+	$SCRIPT_ROOT = "{{ url_for('newscheck') }}";
+	$(function() {
+		$('#submit').bind('click', function() {
+			var news = $('#news').val(); 
+			if(news === "" || news === " " || news === "\n" || news === null){
+		    	bootbox.alert({
+      			 	size: "big",
+    				title: "EMPTY FIELD",
+				    message: "Please enter some news!",
+				    backdrop: true
+				});
+	      	}
+	      	else{
+	      		$.getJSON($SCRIPT_ROOT, {
+		        	news: news,
+		      	}, function(data) {
+		      		if(data.result == "REAL"){
+		      			var src = "static/success.gif";
+		      		}
+		      		else{
+		      			var src = "static/fail.gif";
+		      		}
+		      		bootbox.alert({
+	      			 	size: "big",
+	    				title: "Prediction",
+					    message: "<div align='center'><h2>News is "+data.result+"</h2><img style='width:240px;height:232px;' src='"+src+"'/></div>",
+					    backdrop: true,
+					    callback: function(){ 
+					    	setTimeout(function(){
+							    //do what you need here
+							    location.reload();
+							}, 100);
+					    	 
+					    }
+					});
+		      	});
+	      	}
+	      	return false;
+	    });
+	});
+</script>
