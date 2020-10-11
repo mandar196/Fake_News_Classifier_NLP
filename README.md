@@ -1,4 +1,4 @@
-# Fake_News_Classifier
+# Fake_News_Classifier_NLP
 
 ![download](https://user-images.githubusercontent.com/61036755/95099479-89296600-074d-11eb-8c5e-ba2caec33cbb.png)
 <p> This is complete End to End ML Application for detecting fake news.</p>
